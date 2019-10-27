@@ -17,16 +17,14 @@ contract("VyperStorage", () => {
 
 contract("Viewer", () => {
   it("... should get the value from storage", async () => {
-    const storage = await VyperStorage.deployed();
     const viewer = await Viewer.deployed();
 
-    // Set value of 89
-    await storage.set(89);
+    // Set value of 145 through viewer
+    await viewer.set(145);
 
     // Get stored value via viewer
     const storedData = await viewer.view();
 
-    assert.equal(storedData, 89, "The value 89 was not stored.");
-
+    assert.equal(storedData, 145, "The value 145 was not stored.");
   })
 });
