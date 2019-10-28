@@ -24,7 +24,19 @@ contract("Viewer", () => {
 
     // Get stored value via viewer
     const storedData = await viewer.view();
+    assert.equal(storedData, 145, "The value 145 was not stored.");
+  })
+});
 
+contract("Viewer", () => {
+  it("... should get the value from local after setting via delegate call", async () => {
+    const viewer = await Viewer.deployed();
+
+    // Set value of 145 through viewer
+    await viewer.set_local(145);
+
+    // Get stored value via viewer
+    const storedData = await viewer.view_local();
     assert.equal(storedData, 145, "The value 145 was not stored.");
   })
 });
