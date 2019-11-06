@@ -24,12 +24,35 @@
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
+require("@babel/polyfill");  // See https://github.com/hussy-io/truffle-ledger-provider/issues/9
+
+const LedgerWalletProvider = require('truffle-ledger-provider');
+const fs = require('fs');
+let rawdata = fs.readFileSync("config.json");
+let web3_config = JSON.parse(rawdata);
+console.log(web3_config['infura_project_id']);
+
+const INFURA_APIKEY = web3_config['infura_project_id']; // set your Infura API key
+const ledgerOptions = {
+  networkId: 3, // mainnet
+  path: "44'/60'/0'/0/0", // Ethereum Ledger Live path
+  // path: "44'/60'/0'/0", // ledger default derivation path
+  // askConfirm: false,
+  // accountsLength: 1,
+  accountsOffset: 0
+}; // use default options
+
 module.exports = {
   networks: {
     development: {
       host: "127.0.0.1",
       port: 7545,
       network_id: "*",
+    },
+    ropsten: {
+      provider: new LedgerWalletProvider(ledgerOptions, `https://ropsten.infura.io/${INFURA_APIKEY}`),
+      network_id: 3,
+      gas: 4600000
     }
   }
-}
+};
