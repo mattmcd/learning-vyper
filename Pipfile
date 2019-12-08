@@ -7,6 +7,8 @@ verify_ssl = true
 
 [packages]
 vyper = "==0.1.0b13"
+sqlalchemy = "*"
+web3 = "*"
 
 [requires]
 python_version = "3.7"
